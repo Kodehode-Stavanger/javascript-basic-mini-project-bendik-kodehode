@@ -5,7 +5,7 @@ const orderedList = document.querySelector("#orderedList")
 let currentItems = document.querySelectorAll(".item")
 
 document.getElementById("addToList").addEventListener("click", function() {
-    input.value.length > 0 ? generate() : input.placeholder = "Ye Field of Input Yearns for Letters!"
+    input.value.length > 0 ? generateList() : input.placeholder = "Ye Field of Input Yearns for Letters!"
 });
 const checkListEmpty = () => {
     currentItems = document.querySelectorAll(".item");
@@ -13,9 +13,10 @@ const checkListEmpty = () => {
 }
 
 retrieveSaved();
+save();
 
-function generate() {
-    // Generate list items
+function generateList() {
+    // generate list items
 
     checkListEmpty();
     
@@ -78,6 +79,7 @@ function save() {
         items.push({ text: text.textContent, checked: checked})
     })
     localStorage.setItem("listItems", JSON.stringify(items))
+    console.log("Saved: ", items)
 } 
 
 function retrieveSaved() {
@@ -87,7 +89,7 @@ function retrieveSaved() {
     if (storedItems) {
         storedItems.forEach(item => {
             input.value = item.text
-            generate();
+            generateList();
 
             if (item.checked) {
                 const lastAddedItem = orderedList.lastChild
@@ -99,5 +101,6 @@ function retrieveSaved() {
 
 
     }
+    console.log("Retrieved: ", storedItems)
     checkListEmpty();
 }
